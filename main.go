@@ -69,15 +69,14 @@ func get_value(data map[string]interface{}, keyparts []string) string {
 		subdata, _ := data[keyparts[0]].(map[string]interface{})
 		return get_value(subdata, keyparts[1:])
 	} else if v, ok := data[keyparts[0]]; ok {
-		switch v.(type) {
+		switch v := v.(type) {
 		case nil:
 			return ""
 		case float64:
-			f, _ := v.(float64)
-			if math.Mod(f, 1.0) == 0.0 {
-				return fmt.Sprintf("%d", int(f))
+			if math.Mod(v, 1.0) == 0.0 {
+				return fmt.Sprintf("%d", int(v))
 			} else {
-				return fmt.Sprintf("%f", f)
+				return fmt.Sprintf("%f", v)
 			}
 		default:
 			return fmt.Sprintf("%+v", v)
@@ -114,7 +113,11 @@ func json2csv(r LineReader, w *csv.Writer, keys []string, printHeader bool) {
 		}
 
 		if printHeader {
-			w.Write(keys)
+			err = w.Write(keys)
+			if err != nil {
+				log.Printf("ERROR Writing header: %s", err)
+				break
+			}
 			w.Flush()
 			printHeader = false
 		}
@@ -131,7 +134,16 @@ func json2csv(r LineReader, w *csv.Writer, keys []string, printHeader bool) {
 			record = append(record, get_value(data, expanded_key))
 		}
 
-		w.Write(record)
+		err = w.Write(record)
+		if err != nil {
+			log.Printf("ERROR Writing record: %s", err)
+			break
+		}
 		w.Flush()
+		err = w.Error()
+		if err != nil {
+			log.Printf("ERROR Flushing record: %s", err)
+			break
+		}
 	}
 }
