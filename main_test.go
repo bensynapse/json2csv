@@ -3,18 +3,12 @@ package main
 import (
 	"bytes"
 	"encoding/csv"
-	"io/ioutil"
-	"log"
-	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGetTopic(t *testing.T) {
-	log.SetOutput(ioutil.Discard)
-	defer log.SetOutput(os.Stdout)
-
 	reader := bytes.NewBufferString(`{"a": 1, "b": "asdf\n"}
 {"a" : null}`)
 	buf := bytes.NewBuffer([]byte{})
@@ -27,9 +21,6 @@ func TestGetTopic(t *testing.T) {
 }
 
 func TestGetLargeInt(t *testing.T) {
-	log.SetOutput(ioutil.Discard)
-	defer log.SetOutput(os.Stdout)
-
 	reader := bytes.NewBufferString(`{"a": 1356998399}`)
 	buf := bytes.NewBuffer([]byte{})
 	writer := csv.NewWriter(buf)
@@ -41,8 +32,6 @@ func TestGetLargeInt(t *testing.T) {
 }
 
 func TestGetFloat(t *testing.T) {
-	log.SetOutput(ioutil.Discard)
-	defer log.SetOutput(os.Stdout)
 
 	reader := bytes.NewBufferString(`{"a": 1356998399.32}`)
 	buf := bytes.NewBuffer([]byte{})
@@ -55,9 +44,6 @@ func TestGetFloat(t *testing.T) {
 }
 
 func TestGetNested(t *testing.T) {
-	log.SetOutput(ioutil.Discard)
-	defer log.SetOutput(os.Stdout)
-
 	reader := bytes.NewBufferString(`{"a": {"b": "asdf"}}`)
 	buf := bytes.NewBuffer([]byte{})
 	writer := csv.NewWriter(buf)
@@ -69,9 +55,6 @@ func TestGetNested(t *testing.T) {
 }
 
 func TestHeader(t *testing.T) {
-	log.SetOutput(ioutil.Discard)
-	defer log.SetOutput(os.Stdout)
-
 	reader := bytes.NewBufferString(`{"a": "b"}
 {"a": "c"}`)
 	buf := bytes.NewBuffer([]byte{})
