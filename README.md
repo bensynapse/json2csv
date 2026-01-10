@@ -3,7 +3,8 @@ json2csv
 
 Converts a stream of newline separated json data to csv format.
 
-[![Build Status](https://travis-ci.org/jehiah/json2csv.png?branch=master)](https://travis-ci.org/jehiah/json2csv) [![GitHub release](https://img.shields.io/github/release/jehiah/json2csv.svg)](https://github.com/jehiah/json2csv/releases/latest)
+![Build Status](https://github.com/jehiah/json2csv/actions/workflows/ci.yaml/badge.svg?branch=master)
+[![GitHub release](https://img.shields.io/github/release/jehiah/json2csv.svg)](https://github.com/jehiah/json2csv/releases/latest)
 
 
 Installation
